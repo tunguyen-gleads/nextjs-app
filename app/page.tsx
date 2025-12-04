@@ -1,75 +1,109 @@
 import { Metadata } from "next";
+import Link from "next/link";
+import { getProducts } from "@/services";
+import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "Thứ tự ưu tiện",
-  description: "Thứ tự ưu tiện",
+  title: "Thứ tự ưu tiện - Trang chủ",
+  description: "Khám phá sản phẩm tuyệt vời của chúng tôi",
 };
-export default function Home() {
+
+export default async function Home() {
+  // Lấy 4 sản phẩm đầu tiên để hiển thị preview
+  const allProducts = await getProducts();
+  const featuredProducts = allProducts.slice(0, 4);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black px-4">
-      <main className="bg-white dark:bg-[#18181b] rounded-lg shadow-lg max-w-2xl w-full py-12 px-8">
-        <article>
-          <header className="mb-6 border-b border-zinc-200 dark:border-zinc-700 pb-6">
-            <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">
+    <div className="min-h-screen bg-gradient-to-br from-zinc-50 via-white to-zinc-100 dark:from-black dark:via-zinc-900 dark:to-black">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 dark:from-blue-500/5 dark:via-purple-500/5 dark:to-pink-500/5"></div>
+        <div className="container mx-auto px-4 py-20 md:py-32">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-5xl md:text-7xl font-bold text-zinc-900 dark:text-zinc-100 mb-6 animate-fade-in">
               Thứ tự ưu tiện
             </h1>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">
-              Đăng bởi{" "}
-              <span className="font-semibold text-zinc-900 dark:text-zinc-100">
-                Nguyễn Văn A
-              </span>{" "}
-              · 22/06/2024
+            <p className="text-xl md:text-2xl text-zinc-600 dark:text-zinc-400 mb-8 leading-relaxed">
+              Khám phá bộ sưu tập sản phẩm đa dạng và chất lượng cao của chúng
+              tôi
             </p>
-          </header>
-          <section className="prose prose-zinc max-w-none dark:prose-invert text-lg">
-            <p>
-              Hôm nay mình sẽ chia sẻ trải nghiệm đầu tiên khi bắt đầu xây dựng
-              một dự án blog đơn giản với <strong>Next.js</strong> và{" "}
-              <strong>Tailwind CSS</strong>. Việc kết hợp 2 công nghệ này giúp
-              phát triển giao diện nhanh chóng và hiệu quả.
-            </p>
-            <h2>Khởi tạo dự án</h2>
-            <p>
-              Đầu tiên, mình khởi tạo dự án bằng lệnh{" "}
-              <code>npx create-next-app</code>, sau đó cài đặt Tailwind CSS theo
-              hướng dẫn trên trang chủ của Tailwind. Việc cấu hình diễn ra khá
-              nhanh và thuận tiện.
-            </p>
-            <h2>Tạo giao diện</h2>
-            <p>
-              Sử dụng Tailwind, mình có thể dễ dàng tạo layout và các thành phần
-              như header, nội dung, và action button cho blog. Mọi thứ đều khá
-              trực quan, chỉ cần áp dụng class là giao diện đã thay đổi ngay.
-            </p>
-            <blockquote>
-              <p>
-                “Next.js kết hợp với Tailwind CSS thực sự là một combo mạnh mẽ
-                cho lập trình UI hiện đại.”
-              </p>
-            </blockquote>
-            <h2>Kết luận</h2>
-            <p>
-              Chỉ trong thời gian ngắn, mình đã có một blog mẫu với giao diện
-              đẹp mắt và chuẩn responsive. Nếu bạn cũng đang muốn bắt đầu với
-              Next.js, hãy thử kết hợp cùng Tailwind nhé!
-            </p>
-          </section>
-          <footer className="mt-10 pt-6 border-t border-zinc-200 dark:border-zinc-700 flex justify-end gap-4">
-            <a
-              href="#"
-              className="inline-block rounded-full px-6 py-2 bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 font-medium hover:bg-zinc-700 dark:hover:bg-zinc-300 transition-colors"
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/products"
+                className="inline-block px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                Xem tất cả sản phẩm →
+              </Link>
+              <Link
+                href="#featured"
+                className="inline-block px-8 py-4 border-2 border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 rounded-full font-semibold text-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300"
+              >
+                Sản phẩm nổi bật
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Products Section */}
+      <section id="featured" className="container mx-auto px-4 py-16">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
+            Sản phẩm nổi bật
+          </h2>
+          <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
+            Khám phá những sản phẩm được yêu thích nhất của chúng tôi
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {featuredProducts.map((product) => (
+            <Link
+              key={product.id}
+              href={`/products/${product.id}`}
+              className="group bg-white dark:bg-zinc-800 rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
             >
-              Đọc thêm
-            </a>
-            <a
-              href="#"
-              className="inline-block rounded-full px-6 py-2 border border-zinc-300 dark:border-zinc-600 bg-transparent text-zinc-900 dark:text-zinc-100 font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-            >
-              Bình luận
-            </a>
-          </footer>
-        </article>
-      </main>
+              <div className="relative w-full h-48 bg-gray-100 dark:bg-zinc-700">
+                <Image
+                  src={product.image}
+                  alt={product.title}
+                  fill
+                  className="object-contain p-4 group-hover:scale-110 transition-transform duration-300"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                />
+              </div>
+              <div className="p-4">
+                <span className="inline-block px-2 py-1 text-xs font-semibold text-blue-600 bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 rounded mb-2">
+                  {product.category}
+                </span>
+                <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-2 line-clamp-2">
+                  {product.title}
+                </h3>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
+                    ${product.price.toFixed(2)}
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <span className="text-yellow-400 text-sm">★</span>
+                    <span className="text-xs text-zinc-600 dark:text-zinc-400">
+                      {product.rating.rate}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <div className="text-center">
+          <Link
+            href="/products"
+            className="inline-block px-8 py-3 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-full font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors duration-300"
+          >
+            Xem tất cả {allProducts.length} sản phẩm →
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
