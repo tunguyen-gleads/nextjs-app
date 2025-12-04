@@ -15,6 +15,7 @@ export async function generateMetadata({
   try {
     const { id } = await params;
     const product = await getProductById(id);
+    console.log("🚀 ~ generateMetadata ~ product:", product);
     return {
       title: `${product.title} - Product Details`,
       description: product.description,
