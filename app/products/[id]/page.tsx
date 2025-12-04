@@ -4,6 +4,9 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+// Force dynamic rendering to avoid build-time fetch issues
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {
@@ -12,6 +15,7 @@ export async function generateMetadata({
   try {
     const { id } = await params;
     const product = await getProductById(id);
+    console.log("🚀 ~ generateMetadata ~ product:", product);
     return {
       title: `${product.title} - Product Details`,
       description: product.description,
