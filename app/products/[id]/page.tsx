@@ -2,18 +2,26 @@ import { getProductById } from "@/services";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
-  const product = await getProductById(id);
-  return {
-    title: `${product.title} - Product Details`,
-    description: product.description,
-  };
+  try {
+    const { id } = await params;
+    const product = await getProductById(id);
+    return {
+      title: `${product.title} - Product Details`,
+      description: product.description,
+    };
+  } catch {
+    return {
+      title: "Product Not Found",
+      description: "The requested product could not be found",
+    };
+  }
 }
 
 const ProductDetail = async ({
@@ -22,7 +30,13 @@ const ProductDetail = async ({
   params: Promise<{ id: string }>;
 }) => {
   const { id } = await params;
-  const product = await getProductById(id);
+  let product;
+
+  try {
+    product = await getProductById(id);
+  } catch {
+    notFound();
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-50 via-white to-zinc-100 dark:from-black dark:via-zinc-900 dark:to-black">

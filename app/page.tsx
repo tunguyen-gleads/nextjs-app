@@ -13,6 +13,22 @@ export default async function Home() {
   const allProducts = await getProducts();
   const featuredProducts = allProducts.slice(0, 4);
 
+  // If no products, show empty state
+  if (allProducts.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-zinc-50 via-white to-zinc-100 dark:from-black dark:via-zinc-900 dark:to-black">
+        <div className="text-center px-4">
+          <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
+            Welcome
+          </h1>
+          <p className="text-zinc-600 dark:text-zinc-400 mb-8">
+            Products are loading...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-50 via-white to-zinc-100 dark:from-black dark:via-zinc-900 dark:to-black">
       {/* Hero Section */}
